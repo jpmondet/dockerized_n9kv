@@ -1,34 +1,45 @@
-**[WORK IN PROGRESS (but should be usable already)]**
-
-
-
 # Dockerize Cisco Nexus 9000v
 
-The procedure changes pretty often.
+The procedure to dockerize nxos changes pretty often (for example I wasn't able to use the procedure I was using on I7 with the new 9.3(3))  
+so here is a repo that tries to stay up to date.
 
-Here it's validated & tested for the **latest NX-OS 9.3(3)** version and most specifically the **nexus9300v.9.3.3**.  
+**Current state of this procedure** : Tested & Validated with the **latest NX-OS 9.3(3)** version and most specifically the **nexus9300v.9.3.3**.  
+
+Table of Contents
+=================
+
+   * [Dockerize Cisco Nexus 9000v](#dockerize-cisco-nexus-9000v)
+      * [Download image from cisco.com](#download-image-from-ciscocom)
+         * [Which image to choose ?](#which-image-to-choose-)
+            * [Vagrant or KVM ?](#vagrant-or-kvm-)
+            * [9300 or 9500 ?](#9300-or-9500-)
+      * [Ok, got the image, what now ?](#ok-got-the-image-what-now-)
+         * [Prepare the qcow2 image (from Vagrant box, skip this step if you got the KVM image)](#prepare-the-qcow2-image-from-vagrant-box-skip-this-step-if-you-got-the-kvm-image)
+         * [Build the docker image (can't offer pre-built image because of Cisco's Licence)](#build-the-docker-image-cant-offer-pre-built-image-because-of-ciscos-licence)
+      * [Run the docker image](#run-the-docker-image)
+
 
 ## Download image from cisco.com
 
 With a (free) cisco.com account, you can download the image [here](https://software.cisco.com/download/home/286312239/type/282088129/release/9.3(3)).
 
-### Which image to choose ?
+### Which image should I choose ?
 
 #### Vagrant or KVM ?
 
 I decided to use **Vagrant** image because it comes with a backed config.
 
 You can, of course, use the KVM image, but then you'll have to handle the POAP phase and the first config you want to apply.  
-(**This procedure may be able to handle the POAP phase. Last time I tried it failed but I'll definitely try again very soon)**
+(**This procedure aim to be able to handle the POAP phase. Last time I tried it failed but I'll definitely try again very soon)**
 
 #### 9300 or 9500 ?
 
-I tried and validated only the 9300 image.  
+I tried and validated only the 9300v image.  
 I'm not very fond of the added complexity of a chassis so I won't test/validate the 9500v image.
 
 ## Ok, got the image, what now ?
 
-### Prepare the qcow2 image (from Vagrant box, skip this step if you got the KVM image)
+### Prepare the qcow2 image (skip this step if you downloaded the "KVM" image and not the "Vagrant" one)
 
 ```bash
 mkdir nxos
@@ -55,9 +66,9 @@ make
 you need more during the build to get the base image and pass the qcow2 to the docker context).
 
 
-## Run the docker image
+## Run and Use the docker image
 
-`docker run -d --name nxos --privileged jpmondet/nxos:v933` (modify the name of the image to match yours)
+`docker run -d --name nxos --privileged jpmondet/nxos:v933` (modify the name of the docker image to match yours)
 
 (...Wait ~5min... You can use `watch -n 1 "docker ps"` to know when the container becomes **"Healthy"**)
 
@@ -72,4 +83,4 @@ or
 **Netconf port (830) & nxapi/restconf port (80) are also usable** (after having enable the features). You can even play with snmp.
 
 
-Enjoy ! :___-)
+Enjoy ! :-)
