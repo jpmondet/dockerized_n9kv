@@ -3,7 +3,7 @@
 The procedure to dockerize nxos changes pretty often (for example I wasn't able to use the procedure I was using on I7 with the new 9.3(3))  
 so here is a repo that tries to stay up to date.
 
-**Current state of this procedure** : Tested & Validated with **NX-OS 7.0.3.I7(9), NX-OS 9.3(3), NX-OS 9.3(7)** version and most specifically the **9300** version.
+**Current state of this procedure** : Tested & Validated with **NX-OS 7.0.3.I7(9), NX-OS 9.3(3), NX-OS 9.3(7) and NX-OS 10.1(1)** and most specifically the **9300v** version.
 
 Table of Contents
 =================
